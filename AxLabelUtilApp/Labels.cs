@@ -11,34 +11,47 @@ namespace AxLabelUtilApp
 {
     class Labels
     {
-        public Dictionary<string, string> LangTranslate { get; set; }
-        public Dictionary<string, Dictionary<string, string>> dictoLabels { get; set; }
+        public List<EntryLabel> LangTranslate { get; set; }
+        public Dictionary<string, List<EntryLabel>> dictoLabels { get; set; }
+
+        
 
         public List<string> languages = new List<string>();
 
         DataTable ret;
         public Labels()
         {
-            dictoLabels = new Dictionary<string, Dictionary<string, string>>();
+            dictoLabels = new Dictionary<string, List<EntryLabel>>();
         }
-        private void addLabel(string _labeldId, string _translation, string _language)
+        private void addLabel(string _language, string _labeldId, string _translation, string _comment)
         {
-            Dictionary<string, string> dictoLanguages = new Dictionary<string, string>();
+             List<EntryLabel> dictoLanguages = new List<EntryLabel>();
 
             if (!languages.Contains(_language)) languages.Add(_language);
 
+            EntryLabel entryLabel = new EntryLabel()
+            {
+                Language = _language,
+                Translation = _translation,
+                Comment = _comment
+
+            };
+
+
             if (!dictoLabels.ContainsKey(_labeldId))
             {
-                dictoLanguages.Add(_language, _translation);
+               
+
+                dictoLanguages.Add(entryLabel);
                 dictoLabels.Add(_labeldId, dictoLanguages);
                 return;
             }
 
             dictoLanguages = dictoLabels[_labeldId];
 
-            if (!dictoLanguages.ContainsKey(_language))
+            if (!dictoLanguages.Exists(l => l.Language == _language))
             {
-                dictoLanguages.Add(_language, _translation);
+                dictoLanguages.Add(entryLabel);
                 dictoLabels[_labeldId] = dictoLanguages;
             }
 
@@ -47,21 +60,47 @@ namespace AxLabelUtilApp
         public void loadFile(string _filename, string _language)
         {
 
+            if (!File.Exists(_filename))
+            {
+                MessageBox.Show($"The file '{_filename}' does not exist","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string idlabel = string.Empty, transla = string.Empty, comment = string.Empty;
+
             StreamReader reader = new StreamReader(_filename);
 
             while (!reader.EndOfStream)
             {
                 string line = reader.ReadLine();
 
-                if (!line.Contains("=")) continue;
-
-                string[] splited = line.Split('=');
-
-                if (splited.Length >= 2)
+                if (line.Contains("="))
                 {
-                    this.addLabel(splited[0], splited[1], _language);
+                    if (idlabel != string.Empty)
+                    {
+                        this.addLabel(_language, idlabel, transla, comment);
+                    }
+
+                    string[] splited = line.Split('=');
+                    if (splited.Length == 2)
+                    {
+                        idlabel = splited[0];
+                        transla = splited[1];
+                        comment = string.Empty;
+                    }
                 }
 
+                if (line.Contains(";"))
+                {
+                    comment = line.TrimStart().TrimStart(';');
+                }
+               
+
+            }
+
+            if (idlabel != string.Empty)
+            {
+                this.addLabel(_language, idlabel, transla, comment);
             }
 
             reader.Close();
@@ -75,15 +114,15 @@ namespace AxLabelUtilApp
             ret.Columns.Add("LabelId");
             languages.ForEach(l => ret.Columns.Add(l));
 
-            foreach (KeyValuePair<string, Dictionary<string, string>> item in dictoLabels)
+            foreach (KeyValuePair<string, List<EntryLabel>> item in dictoLabels)
             {
                 DataRow row = ret.NewRow();
 
                 row["LabelId"] = item.Key;
 
-                foreach (KeyValuePair<string, string> translation in item.Value)
+                foreach (EntryLabel translation in item.Value)
                 {
-                    row[translation.Key] = translation.Value;
+                    row[translation.Language] = translation.Translation;
                 }
 
                 ret.Rows.Add(row);
@@ -103,13 +142,36 @@ namespace AxLabelUtilApp
                 {
                     continue;
                 }
+                if (row.Cells[0].Value.ToString() == string.Empty)
+                {
+                    continue;
+                }
+
                 streamWriter.WriteLine($"{row.Cells["LabelId"].Value.ToString()}={row.Cells[_language].Value.ToString()}");
+
+                if (dictoLabels.ContainsKey(row.Cells["LabelId"].Value.ToString()))
+                {
+                    var ListLang = dictoLabels[row.Cells["LabelId"].Value.ToString()];
+                    var lbl = ListLang.Find(l => l.Language == _language);
+
+                    if (lbl != null)
+                    {
+                        if (lbl.Comment != string.Empty)
+                        {
+                            streamWriter.WriteLine($" ;{lbl.Comment}");
+                        }
+                    }
+                }
+
+
+
+                //streamWriter.WriteLine($"{row.Cells["LabelId"].Value.ToString()}={value2write}");
             }
             streamWriter.Close();
 
             if (File.Exists(_filePath))
             {
-                MessageBox.Show($"Archivo {_filePath} escrito");
+                MessageBox.Show($"The file '{Path.GetFileName(_filePath)}' has been saved");
             }
 
 
@@ -117,4 +179,13 @@ namespace AxLabelUtilApp
 
 
     }
+
+    public class EntryLabel
+    {
+        public string Language { get; set; }
+        public string Translation { get; set; }
+        public string Comment { get; set; }
+    }
+
+
 }

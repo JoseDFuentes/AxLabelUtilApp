@@ -28,7 +28,7 @@ namespace AxLabelUtilApp
 
         private object internalsVisibleToField;
 
-        private byte layerField;
+        private int layerField;
 
         private bool lockedField;
 
@@ -44,13 +44,13 @@ namespace AxLabelUtilApp
 
         private string solutionIdField;
 
-        private byte versionBuildField;
+        private int versionBuildField;
 
-        private byte versionMajorField;
+        private int versionMajorField;
 
-        private byte versionMinorField;
+        private int versionMinorField;
 
-        private byte versionRevisionField;
+        private int versionRevisionField;
 
         /// <remarks/>
         public object AppliedUpdates
@@ -131,7 +131,7 @@ namespace AxLabelUtilApp
         }
 
         /// <remarks/>
-        public byte Layer
+        public int Layer
         {
             get
             {
@@ -237,7 +237,7 @@ namespace AxLabelUtilApp
         }
 
         /// <remarks/>
-        public byte VersionBuild
+        public int VersionBuild
         {
             get
             {
@@ -250,7 +250,7 @@ namespace AxLabelUtilApp
         }
 
         /// <remarks/>
-        public byte VersionMajor
+        public int VersionMajor
         {
             get
             {
@@ -263,7 +263,7 @@ namespace AxLabelUtilApp
         }
 
         /// <remarks/>
-        public byte VersionMinor
+        public int VersionMinor
         {
             get
             {
@@ -276,7 +276,7 @@ namespace AxLabelUtilApp
         }
 
         /// <remarks/>
-        public byte VersionRevision
+        public int VersionRevision
         {
             get
             {

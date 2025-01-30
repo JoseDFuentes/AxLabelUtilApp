@@ -43,6 +43,21 @@ namespace AxLabelUtilApp
                 return;
             }
 
+            if (!Directory.Exists(modelStore))
+            {
+
+                MessageBox.Show($"The model store path '{modelStore}' could not be found. Make sure that the folder path exists", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                if (new ModelStoreSetting().ShowDialog() == DialogResult.Cancel)
+                {
+                    Application.Exit();
+                }
+
+                LoadModelList();
+
+            }
+
+
             DirectoryInfo dinfo = new DirectoryInfo(modelStore);
 
             dinfo.GetDirectories().ToList().ForEach(d =>
@@ -111,6 +126,12 @@ namespace AxLabelUtilApp
             {
                 MessageBox.Show(ex.Message);
             }
+
+            if (ret.Language == null)
+            {
+                ret.Language = "en-US";
+            }
+
             return ret;
         }
 
@@ -175,12 +196,20 @@ namespace AxLabelUtilApp
             Dictionary<string, string> dictoLabels = new Dictionary<string, string>();
 
             labelInfo.ForEach(m => dictoLabels.Add(m.ID, m.ID));
-            
+
+            if (dictoLabels.Count == 0)
+            {
+                dictoLabels.Add("NoFiles", "No Files were found");
+            }
 
             comboBox.DataSource = new BindingSource(dictoLabels, null);
 
+            
+
+
             comboBox.ValueMember = "Key";
             comboBox.DisplayMember = "Value";
+
 
 
         }

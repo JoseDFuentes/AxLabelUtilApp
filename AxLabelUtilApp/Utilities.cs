@@ -18,8 +18,8 @@ namespace AxLabelUtilApp
             _dgv.BackgroundColor = formColor;
 
 
-            _dgv.DefaultCellStyle = new DataGridViewCellStyle() { BackColor = Color.Black, ForeColor = Color.White, Font = new Font(new FontFamily("Calibri"), 20) };
-            _dgv.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle() { BackColor = Color.DarkGray, ForeColor = Color.Black };
+            _dgv.DefaultCellStyle = new DataGridViewCellStyle() { BackColor = Color.WhiteSmoke, ForeColor = Color.Black, Font = new Font(new FontFamily("Calibri"), 12) };
+            _dgv.AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle() { BackColor = Color.White, ForeColor = Color.Black };
             _dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle() { BackColor = formColor, ForeColor = Color.Lavender };
             _dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
             _dgv.RowHeadersVisible = false;

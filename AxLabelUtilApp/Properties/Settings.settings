@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ModelStore" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\AosService\PackageLocalDirectory</Value>
+      <Value Profile="(Default)">K:\AosService\PackagesLocalDirectory</Value>
     </Setting>
   </Settings>
 </SettingsFile>
