@@ -17,6 +17,10 @@ namespace AxLabelUtilApp
         string LabelIdSelected = string.Empty;
         string modelSelected = string.Empty;
 
+        List<KeyValuePair<string, string>> modifiedLabels = new List<KeyValuePair<string, string>>();
+
+        DataView labelsView;
+
         bool changesNotSaved = false;
 
         Dictionary<string, string> columnClipboard = new Dictionary<string, string>();
@@ -92,8 +96,10 @@ namespace AxLabelUtilApp
                 labels.loadFile(labelTxt, language);
             });
 
+            labelsView = new DataView();
+            labelsView.Table = labels.labelsLanguage();
 
-            dgv.DataSource = labels.labelsLanguage();
+            dgv.DataSource = labelsView;
             dgv.Columns[0].Frozen = true;
 
             foreach (DataGridViewColumn gridColumn in dgv.Columns)
@@ -209,6 +215,7 @@ namespace AxLabelUtilApp
 
         private void saveChanges()
         {
+            txtBusqueda.Text = string.Empty;
             string msg = "The action will overwrite the languages marked as modified and cannot be undone. Do you want to continue?";
 
             if (MessageBox.Show(msg, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
@@ -216,6 +223,7 @@ namespace AxLabelUtilApp
                 return;
             }
 
+            txtBusqueda.Text = string.Empty;
 
             LabelFile labelFile = modelHandler.LabelInfo.FirstOrDefault(l => l.ID == cbLabelFiles.SelectedValue);
 
@@ -247,6 +255,14 @@ namespace AxLabelUtilApp
         private void dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             this.setCellAsChanged(e.RowIndex, e.ColumnIndex);
+
+            string labelModified = dgv.Rows[e.RowIndex].Cells["LabelId"].Value.ToString();
+
+            if (!modifiedLabels.Exists(l => l.Key == labelModified && l.Value == dgv.Columns[e.ColumnIndex].Name))
+            {
+                modifiedLabels.Add(new KeyValuePair<string, string>(labelModified, dgv.Columns[e.ColumnIndex].Name));
+            }
+
         }
 
 
@@ -304,5 +320,57 @@ namespace AxLabelUtilApp
 
             }
         }
+
+        private void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            filterText(txtBusqueda.Text);
+        }
+
+        private void filterText(string text)
+        {
+            string filter = string.Empty;
+            
+           
+            foreach(DataGridViewColumn col in dgv.Columns)
+            {
+                filter += $" [{col.Name}] LIKE '%{text}%' OR"; 
+            }
+
+            filter += "#";
+            filter = filter.Replace("OR#", "");
+
+            labelsView.RowFilter = filter;
+
+            changeRowFormating();
+
+
+        }
+
+        private void changeRowFormating()
+        {
+
+            if (modifiedLabels.Count == 0)
+            {
+                return;
+            }
+
+            foreach(DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow)
+                {
+                    continue;
+                }
+
+                foreach (DataGridViewColumn column in dgv.Columns)
+                {
+                    if (modifiedLabels.Exists(l => l.Key == row.Cells["LabelId"].Value.ToString() && l.Value == column.Name))
+                    {
+                        setCellAsChanged(row.Index, column.Index);
+                    }
+                }
+            }
+
+        }
+
     }
 }

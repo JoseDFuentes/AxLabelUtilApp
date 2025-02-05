@@ -42,6 +42,7 @@
             this.dgv = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.lblWorkingOn = new System.Windows.Forms.Label();
             this.ColumnContentOp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CopyMenuContent = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,6 @@
             this.PasteOnlyMissing = new System.Windows.Forms.ToolStripMenuItem();
             this.firstColumnContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyLabelId = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtBusqueda = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.panel1.SuspendLayout();
@@ -162,7 +162,7 @@
             this.panel1.Controls.Add(this.dgv);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 221);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(843, 240);
             this.panel1.TabIndex = 6;
@@ -177,10 +177,19 @@
             this.panel2.Controls.Add(this.cbLabelFiles);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 24);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(843, 197);
             this.panel2.TabIndex = 7;
+            // 
+            // txtBusqueda
+            // 
+            this.txtBusqueda.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBusqueda.Location = new System.Drawing.Point(3, 161);
+            this.txtBusqueda.Name = "txtBusqueda";
+            this.txtBusqueda.Size = new System.Drawing.Size(622, 30);
+            this.txtBusqueda.TabIndex = 6;
+            this.txtBusqueda.TextChanged += new System.EventHandler(this.txtBusqueda_TextChanged);
             // 
             // lblWorkingOn
             // 
@@ -236,14 +245,6 @@
             this.copyLabelId.Name = "copyLabelId";
             this.copyLabelId.Size = new System.Drawing.Size(143, 22);
             this.copyLabelId.Text = "Copy LabelId";
-            // 
-            // txtBusqueda
-            // 
-            this.txtBusqueda.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBusqueda.Location = new System.Drawing.Point(13, 162);
-            this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(622, 30);
-            this.txtBusqueda.TabIndex = 6;
             // 
             // LabelParing
             // 

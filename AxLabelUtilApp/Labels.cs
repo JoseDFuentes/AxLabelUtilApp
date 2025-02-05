@@ -110,7 +110,7 @@ namespace AxLabelUtilApp
         public DataTable labelsLanguage()
         {
             ret = new DataTable();
-
+            ret.TableName = "data";
             ret.Columns.Add("LabelId");
             languages.ForEach(l => ret.Columns.Add(l));
 
