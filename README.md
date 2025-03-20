@@ -101,7 +101,10 @@ Puede filtrar para búsqueda de etiquetas incluso si hay modificaciones, manteni
 
 
 
-Si intentan cargar otro archivo sin haber guardado el que están trabajando actualmente, se mostrará un mensaje de confirmación.
+Si intentan cargar otro archivo sin haber guardado el que están trabajando actualmente, se mostrará un mensaje de confirmación para evitar perder trabajo sin guardar.
+
+![image](https://github.com/user-attachments/assets/fd425fbd-8399-488a-8f9f-ec03b65e4510)
+
 
 
 
