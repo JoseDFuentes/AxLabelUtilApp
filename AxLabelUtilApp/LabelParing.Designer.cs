@@ -69,7 +69,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(843, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1353, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -90,14 +90,14 @@
             // mODELSTORESETTINGSToolStripMenuItem
             // 
             this.mODELSTORESETTINGSToolStripMenuItem.Name = "mODELSTORESETTINGSToolStripMenuItem";
-            this.mODELSTORESETTINGSToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.mODELSTORESETTINGSToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.mODELSTORESETTINGSToolStripMenuItem.Text = "MODEL STORE SETTING";
             this.mODELSTORESETTINGSToolStripMenuItem.Click += new System.EventHandler(this.mODELSTORESETTINGSToolStripMenuItem_Click);
             // 
             // aBOUTToolStripMenuItem
             // 
             this.aBOUTToolStripMenuItem.Name = "aBOUTToolStripMenuItem";
-            this.aBOUTToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
+            this.aBOUTToolStripMenuItem.Size = new System.Drawing.Size(58, 22);
             this.aBOUTToolStripMenuItem.Text = "ABOUT";
             this.aBOUTToolStripMenuItem.Click += new System.EventHandler(this.aBOUTToolStripMenuItem_Click);
             // 
@@ -153,7 +153,7 @@
             this.dgv.Location = new System.Drawing.Point(0, 0);
             this.dgv.Name = "dgv";
             this.dgv.RowHeadersWidth = 62;
-            this.dgv.Size = new System.Drawing.Size(843, 240);
+            this.dgv.Size = new System.Drawing.Size(1353, 304);
             this.dgv.TabIndex = 5;
             this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
             // 
@@ -164,7 +164,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 221);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(843, 240);
+            this.panel1.Size = new System.Drawing.Size(1353, 304);
             this.panel1.TabIndex = 6;
             // 
             // panel2
@@ -179,7 +179,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 24);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(843, 197);
+            this.panel2.Size = new System.Drawing.Size(1353, 197);
             this.panel2.TabIndex = 7;
             // 
             // txtBusqueda
@@ -250,7 +250,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(843, 461);
+            this.ClientSize = new System.Drawing.Size(1353, 525);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.menuStrip1);

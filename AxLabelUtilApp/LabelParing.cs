@@ -249,6 +249,7 @@ namespace AxLabelUtilApp
             changesNotSaved = false;
             checkSaveButton(changesNotSaved);
             loadLabelFiles(LabelIdSelected);
+            modifiedLabels = new List<KeyValuePair<string, string>>();
 
         }
 
@@ -315,7 +316,7 @@ namespace AxLabelUtilApp
             if (clickedItem == "copyLabelId")
             {
                 string labelId = dgv.Rows[rowIndex].Cells[columnIndex].Value.ToString();
-
+                //_________________________________________________
                 Clipboard.SetText($"@{LabelIdSelected}:{labelId}");
 
             }
