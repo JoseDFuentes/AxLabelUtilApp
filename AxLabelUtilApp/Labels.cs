@@ -138,11 +138,11 @@ namespace AxLabelUtilApp
 
             foreach (DataGridViewRow row in gridView.Rows)
             {
-                if (row.Cells[0].Value  == null)
+                if (row.Cells[1].Value  == null)
                 {
                     continue;
                 }
-                if (row.Cells[0].Value.ToString() == string.Empty)
+                if (row.Cells[1].Value.ToString() == string.Empty)
                 {
                     continue;
                 }

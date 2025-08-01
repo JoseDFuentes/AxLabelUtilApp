@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cbLabelFiles = new System.Windows.Forms.ComboBox();
             this.dgv = new System.Windows.Forms.DataGridView();
+            this.Copy = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtBusqueda = new System.Windows.Forms.TextBox();
@@ -149,13 +150,26 @@
             // 
             this.dgv.AllowUserToDeleteRows = false;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Copy});
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv.Location = new System.Drawing.Point(0, 0);
             this.dgv.Name = "dgv";
             this.dgv.RowHeadersWidth = 62;
             this.dgv.Size = new System.Drawing.Size(1353, 304);
             this.dgv.TabIndex = 5;
+            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
             this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
+            this.dgv.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgv_CellPainting);
+            this.dgv.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgv_UserAddedRow);
+            // 
+            // Copy
+            // 
+            this.Copy.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Copy.HeaderText = "Copy";
+            this.Copy.MinimumWidth = 100;
+            this.Copy.Name = "Copy";
+            this.Copy.Text = "Copy";
             // 
             // panel1
             // 
@@ -296,6 +310,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyLabelId;
         private System.Windows.Forms.Label lblWorkingOn;
         private System.Windows.Forms.TextBox txtBusqueda;
+        private System.Windows.Forms.DataGridViewButtonColumn Copy;
     }
 }
 

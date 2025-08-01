@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -80,6 +81,9 @@ namespace AxLabelUtilApp
             lblWorkingOn.Text = $"Selected model: {modelSelected} LabelId: {LabelIdSelected}";
 
             loadLabelFiles(LabelIdSelected);
+
+            dgv.FirstDisplayedScrollingRowIndex = dgv.RowCount - 1;
+            dgv.Rows[dgv.Rows.Count - 1].Cells[0].Selected = true;   
         }
 
         private void loadLabelFiles(string labelId)
@@ -104,10 +108,17 @@ namespace AxLabelUtilApp
 
             foreach (DataGridViewColumn gridColumn in dgv.Columns)
             {
-                gridColumn.ContextMenuStrip = gridColumn.Index == 0 ? this.firstColumnContextMenu : this.ColumnContentOp;
+                gridColumn.HeaderText = gridColumn.HeaderText.Replace("*", "");
 
+                if (gridColumn.Index <= 1)
+                {
+                    continue;
+                }
+                gridColumn.ContextMenuStrip = this.ColumnContentOp;
             }
 
+            dgv.FirstDisplayedScrollingRowIndex = dgv.RowCount - 1;
+            dgv.Rows[dgv.Rows.Count - 1].Cells[1].Selected = true;
 
 
         }
@@ -234,7 +245,7 @@ namespace AxLabelUtilApp
                 {
                     continue;
                 }
-                if (col.Index == 0)
+                if (col.Index <= 1)
                 {
                     continue;
                 }
@@ -334,6 +345,10 @@ namespace AxLabelUtilApp
            
             foreach(DataGridViewColumn col in dgv.Columns)
             {
+                if (col.Index == 0)
+                {
+                    continue;
+                }
                 filter += $" [{col.Name}] LIKE '%{text}%' OR"; 
             }
 
@@ -373,5 +388,84 @@ namespace AxLabelUtilApp
 
         }
 
+        private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv.CurrentRow.IsNewRow)
+            {
+                return;
+            }
+
+            if (dgv.CurrentCell.ColumnIndex != 0)
+            {
+                return;
+            }
+
+            string labelId = dgv.CurrentRow.Cells[1].Value.ToString();
+            //_________________________________________________
+            Clipboard.SetText($"@{LabelIdSelected}:{labelId}");
+
+          
+
+        }
+
+        private void dgv_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+           
+        }
+
+        private void dgv_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            
+            if (e.ColumnIndex == 0)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+
+                Bitmap resizedImage = ResizeImage(Properties.Resources.copy_ico, 24, 24);
+
+                var w = resizedImage.Width;
+                var h = resizedImage.Height;
+                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+                e.Graphics.DrawImage(resizedImage, new Rectangle(x, y, w, h));
+                e.Handled = true;
+            }
+        }
+
+        public Bitmap ResizeImage(Image originalImage, int newWidth, int newHeight)
+        {
+            // Crear nueva imagen con las dimensiones especificadas
+            Bitmap resizedImage = new Bitmap(newWidth, newHeight);
+
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                // Configurar calidad de redimensionado
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+
+                // Dibujar la imagen redimensionada
+                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return resizedImage;
+        }
+
+        public Bitmap ResizeImageProportional(Image originalImage, int maxWidth, int maxHeight)
+        {
+            // Calcular nuevas dimensiones manteniendo proporción
+            float ratioX = (float)maxWidth / originalImage.Width;
+            float ratioY = (float)maxHeight / originalImage.Height;
+            float ratio = Math.Min(ratioX, ratioY);
+
+            int newWidth = (int)(originalImage.Width * ratio);
+            int newHeight = (int)(originalImage.Height * ratio);
+
+            return ResizeImage(originalImage, newWidth, newHeight);
+        }
     }
 }
